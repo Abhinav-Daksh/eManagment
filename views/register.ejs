@@ -1,0 +1,43 @@
+<%- include('partials/messages') %>
+<div class="container">
+    <div class="form-area">
+        <h2>Ready to Be a Host..?</h2>
+        <h3>Create an account to create and work on your events.</h3>
+        <form action="/login/register" method="POST">
+            <div class="form">
+                <label for="name">Full Name</label>
+                <input type="name" id="name" name="name" placeholder="Enter your name"
+                    value="<%=typeof name != 'undefined' ? name : ''%>">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email"
+                    value="<%=typeof name != 'undefined' ? email : ''%>">
+                <label for="password">Create Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" 
+                    value="<%=typeof name != 'undefined' ? password : ''%>">
+                <label for="password2">Confirm Password</label>
+                <input type="password" id="password2" name="password2" placeholder="Confirm your password"
+                 value="<%=typeof name != 'undefined' ? password2 : ''%>">
+
+
+                <div class="show-password">
+                    <input type="checkbox" id="showPassword" onclick="togglePassword()">
+                    <label for="showPassword">Show Password</label>
+                </div>
+                <button type="submit">Sign Up</button>
+        </form>
+
+        <p>Already Registered? <a href="/login">Sign In</a></p>
+    </div>
+</div>
+<div class="image-area"></div>
+</div>
+
+<script>
+    function togglePassword() {
+        const password = document.getElementById("password");
+        const confirmPassword = document.getElementById("password2");
+        const type = password.type === "text" ? "password" : "text";
+        password.type = type;
+        confirmPassword.type = type;
+    }
+</script>

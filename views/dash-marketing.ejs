@@ -1,0 +1,35 @@
+<div id="page-content-wrapper">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <div class="container-fluid">
+            <button class="btn btn-primary" id="menu-toggle">
+                <i class="fa fa-bars"></i>
+            </button>
+            <h1 class="ml-auto mb-0">Marketing</h1>
+        </div>
+    </nav>
+    
+    <div class="container mt-5">
+        <div class="row">
+            <% if (E.length > 0) { %>
+                <% E.forEach(event => { %>
+                    <div class="col-md-4 mb-4">
+                        <div class="card custom-card">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= event.title %></h5>
+                                <p class="card-text"><%= event.date.toDateString() %></p>
+                                <p class="card-text"><%= event.venue %></p>
+                                <% if(event.publish == true){ %>
+                                    <button class="btn btn-info">Published</button>
+                               <% }else{ %>
+                                    <button class="btn btn-info"><a href="/dashboard/marketing/<%= event._id %>">Publish</a></button>
+                               <% } %>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %> 
+            <% } else { %>
+                <p>You have no Public events, Create a Public Event to Use this Feature.</p>
+            <% } %>
+        </div>
+    </div>
+</div>

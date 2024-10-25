@@ -1,0 +1,38 @@
+<div id="page-content-wrapper">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <div class="container-fluid">
+            <button class="btn btn-primary" id="menu-toggle">
+                <i class="fa fa-bars"></i>
+            </button>
+            <h1 class="ml-auto mb-0">Your Events</h1>
+        </div>
+    </nav>
+    
+        <div class="container mt-5">
+            <div class="mb-4">
+                <button class="btn btn-success" id="create-event-btn"><a href="/dashboard/newEvent">
+                    <i class="fas fa-plus"></i> Create New Event </a>
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <% if (E.length > 0) { %>
+                <% E.forEach(event => { %>
+                    <div class="col-md-4 mb-4">
+                        <div class="card custom-card">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= event.title %></h5>
+                                <p class="card-text"><%= event.access %></p>
+                                <p class="card-text"><%= event.date.toDateString() %></p>
+                                <p class="card-text"><%= event.venue %></p>
+                                <button class="btn btn-info"><a href="/dashboard/AllEvents/<%= event._id %>">View</a></button>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %> 
+            <% } else { %>
+                <p>You have no events.</p>
+            <% } %>
+        </div>
+    </div>
+</div>

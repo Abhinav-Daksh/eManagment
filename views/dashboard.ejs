@@ -1,0 +1,59 @@
+  <div id="page-content-wrapper">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+    <div class="container-fluid">
+        <button class="btn btn-primary" id="menu-toggle">
+            <i class="fa fa-bars"></i>
+        </button>
+        <h1 class="ml-auto mb-0">Welcome Back, Abhi Don!</h1>
+    </div>
+</nav>
+
+    
+
+    <div class="container-fluid mt-4">
+      <div class="row">
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="card shadow-sm">
+            <div class="card-body text-center">
+              <h3><%= eventLength %></h3>
+              <p class="card-text">Events</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="card shadow-sm">
+            <div class="card-body text-center">
+              <h3>0</h3>
+              <p class="card-text">Tickets Sold</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="card shadow-sm">
+            <div class="card-body text-center">
+              <h3>$0</h3>
+              <p class="card-text">Total Revenue</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mt-4">
+        <div class="card-header">Upcoming Events</div>
+        <div class="card-body">
+            <% if (E.length > 0) { %>
+                <% E.forEach(event => { %>
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <h5><%= event.title %></h5>
+                            <p><%= event.date.toDateString() %></p>
+                        </div>
+                    </div>
+                <% }); %> 
+            <% } else { %>
+                <p>You have no events. Go to the Events section to create one.</p>
+            <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

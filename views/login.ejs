@@ -1,0 +1,43 @@
+<%- include('partials/messages') %>
+<div class="container">
+    <div class="form-area">
+        <h2> Are you a Host..?</h2>
+        <h3>Enter your credentials to Prove that.</h3>
+        <form action="/login" method="POST">
+            <div class="form">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email"
+                    value="<%=typeof name != 'undefined' ? email : ''%>">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" id="password"
+                    value="<%=typeof name != 'undefined' ? password : ''%>">
+
+
+                <div class="show-password">
+                    <input type="checkbox" id="showPassword" onclick="togglePassword()">
+                    <label for="showPassword">Show Password</label>
+                </div>
+                <button type="submit">Sign In</button>
+        </form>
+
+        <p>Not Registered? <a href="/login/register">Sign up</a></p>
+    </div>
+</div>
+<div class="image-area"></div>
+</div>
+
+<script>
+    function togglePassword() {
+        const password = document.getElementById("password");
+        const confirmPassword = document.getElementById("confirm-password");
+        const type = password.type === "text" ? "password" : "text";
+        password.type = type;
+        confirmPassword.type = type;
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var toastElement = document.getElementById('flash-msg');
+            var toast = new bootstrap.Toast(toastElement);
+            toast.show();
+        });
+</script>
