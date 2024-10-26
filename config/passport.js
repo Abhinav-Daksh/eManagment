@@ -1,47 +1,49 @@
 import LS from "passport-local";
-import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
-const LocalStrategy = LS.Strategy;
-
-//Load User Model
 import User from "../models/Users.js";
 
-const fun = function (passport) {
+const LocalStrategy = LS.Strategy;
+
+const initializePassport = (passport) => {
+  // Define LocalStrategy for passport
   passport.use(
-    new LocalStrategy({ usernameField: "email" }, (email, password, done) => {
-      //Match User
-      User.findOne({ email: email })
-        .then((user) => {
-          if (!user) {
-            return done(null, false, { message: "Email is Not Registered" });
-          }
-          //Match Password
-          bcrypt.compare(password, user.password, (err, isMatch) => {
-            if (err) throw err;
-            if (isMatch) {
-              return done(null, user);
-            } else {
-              return done(null, false, { message: "Password Incorrect" });
-            }
-          });
-        })
-        .catch((err) => console.log(err));
+    new LocalStrategy({ usernameField: "email" }, async (email, password, done) => {
+      try {
+        // Check if user with given email exists
+        const user = await User.findOne({ email });
+        if (!user) {
+          return done(null, false, { message: "Email is not registered" });
+        }
+
+        // Match password
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (isMatch) {
+          return done(null, user);
+        } else {
+          return done(null, false, { message: "Password is incorrect" });
+        }
+      } catch (error) {
+        console.error("Error during authentication:", error);
+        return done(error);
+      }
     })
   );
-  passport.serializeUser(function (user, done) {
+
+  // Serialize user to store in session
+  passport.serializeUser((user, done) => {
     done(null, user.id);
   });
+
+  // Deserialize user from session
   passport.deserializeUser(async (id, done) => {
     try {
       const user = await User.findById(id);
-      if (user) {
-        done(null, user);
-      } else {
-        done(null, false);
-      }
-    } catch (err) {
-      done(err);
+      done(null, user || false);
+    } catch (error) {
+      console.error("Error during deserialization:", error);
+      done(error);
     }
   });
 };
-export default fun;
+
+export default initializePassport;

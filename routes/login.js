@@ -1,43 +1,37 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import User from '../models/Users.js';
-import Passport  from 'passport';
+import passport from 'passport';
 
 const router = express.Router();
 
-// Render home login page
+// Route: Render login page
 router.get('/', (req, res) => {
     res.render('login', { title: 'showTime-Login', cssFile: 'login.css' });
 });
 
-// Render register page
+// Route: Render registration page
 router.get('/register', (req, res) => {
     res.render('register', { title: 'showTime-Register', cssFile: 'register.css' });
 });
 
-// Register handle
+// Route: Register new user
 router.post('/register', async (req, res) => {
     const { name, email, password, password2 } = req.body;
     let errors = [];
 
-    // Check if any field is empty
+    // Validation checks
     if (!name || !email || !password || !password2) {
         errors.push({ msg: "Please fill all fields" });
     }
-
-    // Check if password is not equal to confirm password
     if (password !== password2) {
-        errors.push({ msg: "Confirm password should be the same as Password" });
+        errors.push({ msg: "Confirm password should match the password" });
     }
-
-    // Check if password is at least 6 characters long
-    if (password.length < 6 && password.length > 0) {
+    if (password.length < 6) {
         errors.push({ msg: "Password should be at least 6 characters" });
     }
 
-    // Check if there are any errors
     if (errors.length > 0) {
-        errors.forEach(error => req.flash('error_msg', error.msg));
         return res.render('register', { 
             title: 'showTime-Register', 
             cssFile: 'register.css', 
@@ -50,10 +44,10 @@ router.post('/register', async (req, res) => {
     }
 
     try {
-        // Check if user already exists
-        const user = await User.findOne({ email });
-        if (user) {
-            errors.push({ msg: 'Email already registered, try to login' });
+        // Check if user exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            errors.push({ msg: 'Email is already registered. Please login instead.' });
             return res.render('register', { 
                 title: 'showTime-Register', 
                 cssFile: 'register.css', 
@@ -72,29 +66,26 @@ router.post('/register', async (req, res) => {
             password
         });
 
-        // Hash password
+        // Hash password and save user
         const salt = await bcrypt.genSalt(10);
-        newUser.password = await bcrypt.hash(newUser.password, salt);
-
-        // Save the user
+        newUser.password = await bcrypt.hash(password, salt);
         await newUser.save();
-        req.flash('success_msg','You are Now Registered, Can Login..');
-        res.redirect('/login');
 
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Server error');
+        req.flash('success_msg', 'You are now registered and can log in');
+        res.redirect('/login');
+    } catch (error) {
+        console.error("Error registering user:", error);
+        res.status(500).send('Server Error');
     }
 });
 
-
-//login handle 
-router.post('/',(req,res,next)=>{
-    Passport.authenticate('local',{
-        successRedirect :'/dashboard/home',
-        failureRedirect:'/login',
-        failureFlash:true
-    })(req,res,next);                                                                                                                                     
+// Route: Login handle
+router.post('/', (req, res, next) => {
+    passport.authenticate('local', {
+        successRedirect: '/dashboard/home',
+        failureRedirect: '/login',
+        failureFlash: true
+    })(req, res, next);
 });
 
 export default router;
