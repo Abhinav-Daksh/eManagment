@@ -7,7 +7,7 @@ import { ensureAuthenticated } from "../config/auth.js";
 
 const router = express.Router();
 
-// Helper function to fetch tasks
+//function to fetch tasks
 async function fetchTasks(eventId) {
     try {
         return await Tasks.find({ eId: eventId }) || [];
@@ -223,5 +223,10 @@ router.get("/allEvents/del/:id/:eId", ensureAuthenticated, async (req, res) => {
         res.status(502).send("Internal Server Error");
     }
 });
+
+// Route: Analytics Page
+router.get("/analytics",ensureAuthenticated,async (req,res)=>{
+    
+})
 
 export default router;

@@ -8,20 +8,20 @@ a{
     color: inherit;
 }
 
-body{
-    overflow: hidden;
-}
-
 .head-wrap {
     width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
-    position:fixed;
-    top: 0;
-    z-index: 100;
+    position: fixed;  
+    top: 0;           
+    left: 0;
+    right: 0;
+    z-index: 1000; 
     background-color: rgba(61, 143, 234,0.6);
+    transition: top 0.3s ease-in-out;
 }
+
 
 nav {
     width: 95vw;
@@ -91,59 +91,18 @@ nav {
     color: white;
     font-size: 1.3rem;
 }
-#showcase{
-    width: 100vw;
-    height: 100vh;
+.card {
+    border-radius: 15px;
+    transition: transform 0.2s;
 }
-video{
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover;
+
+.card:hover {
+    transform: translateY(-5px);
 }
-.hero{
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(61, 143, 234,0.8);
-    position:absolute;
-    top: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
+.shows-wrap{
+    margin: 20vmin 20px 0 20px;
 }
-.main{
-    width: 95vw;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-.main h1{
-    font-size: 2.2rem;
-}
-.main h4{
-    font-size: 1.3rem;
-}
-.options{
-    margin-top: 45px;
-    width: 45%;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-}
-.options a{
-    color: black;
-    background-color: white;
-    padding:12px 35px;
-    border-radius: 26px;
-}
-#book-show{
-    background-color: transparent;
-    border: 2px solid white;
-    color: white;
-}
-/* Responsive */
+
 @media only screen and (max-width: 600px) {
     .icon-login{
         display: block;
@@ -151,10 +110,4 @@ video{
     .buttons{
         display: none;
     }
-    .options{
-        width: 90%;
-    }
-     .options a{
-        padding:5px 15px;
-     }
 }
