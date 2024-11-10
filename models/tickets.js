@@ -14,6 +14,18 @@ const TicketSchema = new mongoose.Schema({
     eId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:Event
+    },
+    showCity:{
+        type:String,
+    },
+    showDate:{
+        type:Date
+    },
+    showName:{
+        type:String
+    },
+    showVenue:{
+        type:String
     }
 });
 const Ticket = mongoose.model('Tickets',TicketSchema);

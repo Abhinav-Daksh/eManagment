@@ -145,7 +145,7 @@ router.post("/newEvent", ensureAuthenticated, async (req, res) => {
 // Route: Marketing Page
 router.get("/marketing", ensureAuthenticated, async (req, res) => {
     try {
-        const events = await Event.find({ access: "Public" });
+        const events = await Event.find({ access: "Public", user:req.user._id });
         
         res.render("dash-marketing", {
             layout: "dashboard-layout.ejs",
@@ -159,22 +159,24 @@ router.get("/marketing", ensureAuthenticated, async (req, res) => {
 });
 
 // Route: Ticket Form for Event Publishing
-router.get("/marketing/:id", ensureAuthenticated, (req, res) => {
+router.get("/marketing/:id", ensureAuthenticated, async(req, res) => {
     const eventId = req.params.id;
+    const event = await Event.findById(eventId);
     res.render("ticketForm", {
         layout: "layout.ejs",
         cssFile: "newEvent.css",
         title: "Publish your Event",
         eventId,
+        E:event,
     });
 });
 
 // Route: Publish Ticket
 router.post("/marketing", ensureAuthenticated, async (req, res) => {
     try {
-        const { Limit, Price, Validity, eventId } = req.body;
+        const { Limit, Price, Validity, eventId ,ShowCity,ShowDate,ShowVenue,ShowName} = req.body;
 
-        const newTicket = new Ticket({ limit: Limit, price: Price, validity: Validity, eId: eventId });
+        const newTicket = new Ticket({ limit: Limit, price: Price, validity: Validity, eId: eventId ,showCity:ShowCity,showDate:ShowDate,showName:ShowName,showVenue:ShowVenue});
         await newTicket.save();
         
         await Event.updateOne({ _id: eventId }, { $set: { publish: true } });

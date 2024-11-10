@@ -14,6 +14,10 @@
             <label for="validity">Ticket valid till Date</label>
             <input type="date" id="validity" name="Validity" required>
             <input type="hidden" name="eventId" value="<%= eventId %>">
+            <input type="hidden" name="ShowCity" value = "<%= E.city %>">
+            <input type="hidden" name="ShowDate" value = "<%= E.date %>">
+            <input type="hidden" name="ShowVenue" value = "<%= E.venue %>">
+            <input type="hidden" name="ShowName" value = "<%= E.title %>">          
         </div>
         <button type="submit" class="submit-btn">Submit</button>
     </form>
