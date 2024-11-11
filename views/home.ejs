@@ -5,8 +5,11 @@
             </div>
             <div class="search">
                 <div class="searchbar">
-                    <input type="search" id="search" placeholder="Search Shows Near You">
-                    <i class="fa fa-search"></i>
+                    <form action="/find-show" method="POST" id="search-form">
+                        <input type="search" id="search" name="searchValue" placeholder="Search Shows Near You" required autocomplete="off">
+                        <button class="btn bg-transparent border-0 p-0" style="cursor: pointer" type="submit"><i
+                                class="fa fa-search"></i></button>
+                    </form>
                 </div>
             </div>
             <div class="buttons">
