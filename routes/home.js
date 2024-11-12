@@ -31,8 +31,26 @@ router.post('/find-show',async(req,res)=>{
         console.log(err);
         res.status(502).send('Internal Server Error');
     }
-    
+});
 
+router.get('/order/:id',async (req,res)=>{
+   try{
+    const ticketId = req.params.id;
+    const ticket = await Ticket.findById(ticketId);
+    if(ticket != null){
+        res.render('orderSumm',{
+            layout:"buyLayout.ejs",
+            Title:ticket.showName,
+            details:ticket,
+        });
+    }else{
+        res.status(404).send('Page Not fount');
+    }
+
+   }catch(err){
+    res.status(502).send('Service Unavailable');
+    console.log(err);
+   }
 })
 
 export default router;

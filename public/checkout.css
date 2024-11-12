@@ -1,0 +1,42 @@
+.container {
+    max-width: 900px;
+    margin-top: 20px;
+  }
+  
+  /* Left and Right Side */
+  .left-side {
+    border-right: 1px solid #ddd;
+    padding: 20px;
+  }
+  
+  .right-side {
+    padding: 20px;
+  }
+  
+  .order-summary {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  .checkout-btn, .place-order-btn {
+    background-color: #f96332;
+    color: #fff;
+    font-weight: bold;
+    width: 100%;
+  }
+  
+  .info-text {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .form-label {
+    font-weight: bold;
+  }
+  
+  .checkbox-group label {
+    font-size: 14px;
+    color: #333;
+  }
+  

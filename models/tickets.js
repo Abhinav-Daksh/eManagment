@@ -26,6 +26,10 @@ const TicketSchema = new mongoose.Schema({
     },
     showVenue:{
         type:String
+    },
+    sold:{
+        type:Number,
+        default:0
     }
 });
 const Ticket = mongoose.model('Tickets',TicketSchema);
