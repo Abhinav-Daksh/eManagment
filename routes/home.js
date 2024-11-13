@@ -51,6 +51,10 @@ router.get('/order/:id',async (req,res)=>{
     res.status(502).send('Service Unavailable');
     console.log(err);
    }
+});
+
+router.post('/checkout/payment',(req,res)=>{
+    console.log(req.body.totalAmount);
 })
 
 export default router;

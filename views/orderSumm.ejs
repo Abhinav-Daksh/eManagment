@@ -1,12 +1,19 @@
 <div class="container">
-    <div class="row">
-      <div class="col-lg-8 col-md-7 left-side">
-        <h4><%= details.showName %></h4>
-        <p><%= details.showDate.toDateString() %></p>
-        <hr>
-        <div class="ticket-option mb-3">
-          <h5>Classic</h5>
-          <p>₹<%= details.price%></p>
+  <div class="row">
+    <div class="col-lg-8 col-md-7 left-side">
+      <h4>
+        <%= details.showName %>
+      </h4>
+      <p>
+        <%= details.showDate.toDateString() %>
+      </p>
+      <hr>
+      <div class="ticket-option mb-3">
+        <h5>Classic</h5>
+        <p>₹<span id="actualAmount">
+            <%= details.price%>
+          </span></p>
+        <form action="/checkout/payment" method="post">
           <div class="mb-3">
             <label for="quantity" class="form-label">Quantity</label>
             <select id="quantity" class="form-select" style="width: 100px;">
@@ -16,22 +23,38 @@
               <option value="4">4</option>
               <option value="5">5</option>
             </select>
-            <small class="text-muted">Hurry, Only <%= details.limit %> Left</small>
+            <input type="hidden" name="totalAmount" value="<%=details.price + 49 %>" id="totalAm">
+            <small class="text-muted">Hurry, Only 15 Left</small>
           </div>
-        </div>
-        
-        <hr>
-        <button class="btn checkout-btn d-none d-md-block">Check out</button>
       </div>
-      <div class="col-lg-4 col-md-5 right-side">
-        <div class="order-summary">
-          <h5>Order summary</h5>
-          <p><span>2</span> X Classic - <span>₹500</span></p>
-          <p>Platform Fees - ₹49</p>
-          <hr>
-          <h5>Total: ₹549</h5>
-        </div>
-        <button class="btn checkout-btn mt-3 d-md-none">Check out</button>
+      <hr>
+      <button class="btn checkout-btn d-none d-md-block" type="submit">Check out</button>
     </div>
+    <div class="col-lg-4 col-md-5 right-side">
+      <div class="order-summary">
+        <h5>Order summary</h5>
+        <p><span id="ticketQuantity">1</span> X Classic - ₹<span id="ticketAmount"><%= details.price %></span></p>
+        <p>Platform Fees - ₹49</p>
+        <hr>
+        <h5 id="totalAmount">Total: ₹<%=details.price + 49 %></details></h5>
+      </div>
+      <button class="btn checkout-btn mt-3 d-md-none" type="submit">Check out</button>
+
+    </div>
+    </form>
   </div>
 </div>
+<script>
+  const ticketPrice = "<%= details.price %>";
+  document.getElementById('quantity').addEventListener('change', () => {
+    let selectedQuantity = document.getElementById('quantity');
+    let summQuantity = document.getElementById('ticketQuantity');
+    document.getElementById('ticketAmount').textContent = selectedQuantity.value * ticketPrice;
+    summQuantity.textContent = selectedQuantity.value;
+    document.getElementById('totalAmount').textContent = `Total: ₹${(selectedQuantity.value * ticketPrice) + 49}`;
+    document.getElementById('totalAm').value = (selectedQuantity.value * ticketPrice) + 49;
+  })
+
+
+
+</script>
