@@ -10,11 +10,18 @@ import routeDashboard from './routes/dashboard.js';
 import flash from 'connect-flash';
 import MongoStore from 'connect-mongo';
 import session from 'express-session';
+import Razorpay from 'razorpay';
 const app = express();
 import passport from 'passport';
 
 import configPass from './config/passport.js';
 configPass(passport);
+
+// //razorpay 
+// const razorpay = new Razorpay({
+//   key_id:process.env.razorpayKeyId,
+//   key_secret:process.env.razorpayKeySecret,
+// });
 
 //db config 
 const mongoUri = process.env.mongoURI;

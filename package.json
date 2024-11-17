@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "build":"node build"
+    "build": "node build"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +25,7 @@
     "mongoose": "^8.7.0",
     "nodemon": "^3.1.7",
     "passport": "^0.7.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "razorpay": "^2.9.5"
   }
 }
