@@ -80,7 +80,7 @@ router.post('/register', async (req, res) => {
 });
 
 // Route: Login handle
-router.post('/', (req, res, next) => {
+router.post('/verify', (req, res, next) => {
     passport.authenticate('local', {
         successRedirect: '/dashboard/home',
         failureRedirect: '/login',
